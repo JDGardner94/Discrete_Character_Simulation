@@ -1,0 +1,7 @@
+# Select Model (Discrete: Dependent)
+3
+# Select Analysis Type (MCMC)
+2
+# Settings
+RJHP gamma 0 10 0 10
+run

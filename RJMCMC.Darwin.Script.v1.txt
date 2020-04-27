@@ -1,0 +1,66 @@
+# RJMCMC script
+# Jacob Gardner, 1/12/2017
+
+library(ape)
+library(corHMM)
+library(geiger)
+library(MCMCglmm)
+library(phytools)
+
+NSIMS <- 1000 # Number of iterations in simulation
+NTAXA <- 100 # number of taxa
+NODES <- NTAXA-1 #number of nodes in tree
+pvec <- numeric(NSIMS) # vector for pvalues
+node.prob <- numeric(NODES) # vector for highest probability nodes in each tree
+nodes.meanprob <- numeric(NSIMS) # mean of highest probability for all nodes for each tree
+nodes.varprob <- numeric(NSIMS) # variance of highest probability for all nodes in each iteration
+trees <- character(NSIMS) # store trees
+character.data <- table(NSIMS) # Table for all data
+DarwinCharacters <- table(NSIMS) # Table for Darwin characters
+UnrepBurstCharacters <- table(NSIMS) # Table for UnrepBurst characters
+UnrepBurstCharacters.mean <- numeric(NSIMS) # Table for frequency of 1's in UnrepBurst data
+cladesize <- numeric(NSIMS) # size of clade under study
+
+
+
+i<-0
+while (i<NSIMS){
+    i<-i+1
+cat("iteration", i, '\n')
+
+## Simulate tree in Geiger
+phy <- sim.bdtree(b=0.1, d=0, stop="taxa", n=(NTAXA))
+
+## Generate Data
+# Sets all data to 0
+darwindata <-rep(0, NTAXA)
+
+#Find clade to change values from 0 to 1
+cladetip <- tips(phy, mrca(phy)["s40", "s20"])
+cladetip <- substr(cladetip,start=2,stop=4) #removes "s" from tip name
+tips <- as.numeric(cladetip)
+
+# Keeps the clade size constrained between 40 and 60 taxa
+while (length(tips) > 60 | length(tips) < 40){
+phy <- sim.bdtree(b=0.1, d=0, stop="taxa", n=(NTAXA))
+
+	# Sets all data to 0
+	darwindata <-rep(0, NTAXA)
+
+	#Find clade to change values from 0 to 1
+	cladetip <- tips(phy, mrca(phy)["s40", "s20"])
+	cladetip <- substr(cladetip,start=2,stop=4) #removes "s" from tip name
+	tips <- as.numeric(cladetip)
+}
+
+# Sets value for clade to 1 to make Darwin data
+darwindata[c(tips)]<-1
+ 
+# Exporting trees and Data from R
+mytree <- paste0("darwin", "_", i, ".nex") #file name allows for multiple file outputs w/different names
+write.nexus(phy, file=mytree) #nexus format
+mydata <- paste0("darwin", "_", i, ".txt") #file name allows for multiple file outputs w/different names
+data <- cbind(phy$tip.label, darwindata, darwindata)
+write(t(data), sep = "\t", file = mydata, ncolumns =3)
+
+}
