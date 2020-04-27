@@ -250,7 +250,7 @@ model.Darwin.UnrepBurst5.lrt <- 2*(model.Darwin.UnrepBurst5.dQ$loglik - model.Da
 	model.Darwin.UnrepBurst5.lrt <- 2*(model.Darwin.UnrepBurst5.iQ$loglik - model.Darwin.UnrepBurst5.dQ$loglik)
 	} 	
 
-##Saves data in a table for each iteration. For explanations of data structure see Maddison and Fitzjohn. Syst. Biol. 64(1):127–136, 2015.
+##Saves data in a table for each iteration. For explanations of data structure see Maddison and Fitzjohn. Syst. Biol. 64(1):127Â–136, 2015.
 trees[i] <- write.tree(phy)
 cladesize[i] <- length(tips)
 DarwinCharacters <- rbind(DarwinCharacters,darwindata)
