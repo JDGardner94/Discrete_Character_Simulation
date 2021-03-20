@@ -1,6 +1,9 @@
 # Discrete_Character_Simulation
 Code for simulating and testing models of correlated evolution for discrete characters.
 
+Peer-review publication in Systematic Biology: https://doi.org/10.1093/sysbio/syab017 
+Supplementary materials and dataset on Dryad: https://doi.org/10.5061/dryad.8931zcrpw 
+
 ## Background
 Commonly-used phylogenetic comparative methods (PCMs) are known to support models of correlated evolution in scenarios with a single unreplicated evolutionary event (e.g., discrete character change, evolutionary jump, increase rate of evolution, etc.). In particular, for binary character data (absent/present), models of correlated evolution are supported in cases where two binary characters change state on the same branch of the tree and are never replicated (referred to as the Darwin's scenario by Maddison and FitzJohn, 2015). Despite statistical significance favoring such models, correlated evolution is not theoretically expected in these cases -- the characters are more akin to synapomorphies and their co-distribution is most likely coincidental. Models of correlated evolution are also supported in scenarios where one character changes state on the same branch that another character changes its rate of evolution; this association is also never replicated and is limited to one clade (referred to as the unreplicated burst scenario). The inability to distinguish true evidence for correlated evolution over a statistical artifact presents a challenge for those using PCMs alone to study the co-evolution of organismal traits.
 
